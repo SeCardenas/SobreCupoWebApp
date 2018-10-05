@@ -18,11 +18,9 @@ class App extends Component {
     return (
       <div>
         <h1>Welcome!</h1>
-        <span>{this.state.time.getMinutes()}</span>
         <ul>
-          {this.props.classrooms.map(c => {
-            return c.clasrooms.map(cl => {
-              
+          {
+            this.props.classrooms ? this.props.classrooms.clasrooms.map(cl => {
               let isFree = true;
               let minutesLeft = 'Todo el día';
               for(let i = 0; i<cl.schedules.length; i++) {
@@ -46,8 +44,8 @@ class App extends Component {
                   </li>
                 );
               }
-            });
-          })}
+            }) : undefined
+          }
         </ul>
       </div>
     );
@@ -63,17 +61,13 @@ class App extends Component {
 }
 
 App.propTypes = {
-  classrooms: PropTypes.array.isRequired
+  classrooms: PropTypes.object
 };
 
 export default withTracker(() => {
-  let d = new Date();
-  let dd = d.getDate();
-  let mm = d.getMonth()+1;
-  let yy = d.getFullYear().toString().substr(-2);
-  if(dd<10) dd = '0'+dd;
-  if(mm<10) mm = '0'+mm;
+  Meteor.subscribe('classrooms');
+
   return {
-    classrooms: Classrooms.find({date: dd+'-'+mm+'-'+yy+'.json'}).fetch()
+    classrooms: Classrooms.findOne()
   };
 })(App);
