@@ -73,7 +73,6 @@ export default withTracker(() => {
   let yy = d.getFullYear().toString().substr(-2);
   if(dd<10) dd = '0'+dd;
   if(mm<10) mm = '0'+mm;
-  console.log(dd+'-'+mm+'-'+yy+'.json');
   return {
     classrooms: Classrooms.find({date: dd+'-'+mm+'-'+yy+'.json'}).fetch()
   };
