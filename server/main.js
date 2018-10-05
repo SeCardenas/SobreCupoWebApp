@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import './imports/api/db.js';
+import '../imports/api/classrooms.js';
 
 
 Meteor.startup(() => {
