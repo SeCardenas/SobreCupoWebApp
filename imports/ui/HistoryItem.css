@@ -1,0 +1,55 @@
+.history-item-full {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 0rem;
+  margin: 0.3rem;
+  border: 2px solid blueviolet;
+  border-radius: 5px;
+}
+
+.history-item-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.history-item-classroom {
+  font-size: 3.5rem;
+}
+
+.reason-span {
+  display: inline-block;
+  width: 25rem;
+}
+
+.date-span {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: darkgrey;
+}
+.history-item-main-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1.5rem;
+}
+
+.history-item-date {
+  font-size: 1.2rem;
+}
+
+.from.to-span {
+  font-size: 0.9rem;
+}

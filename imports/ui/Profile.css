@@ -1,0 +1,15 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.show-more-button {
+  color: blue;
+  text-decoration: underline;
+}
+
+.show-more-button:hover {
+  cursor: pointer;
+}
