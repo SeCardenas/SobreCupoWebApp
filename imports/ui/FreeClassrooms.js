@@ -3,6 +3,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Classrooms } from '../api/classrooms.js';
+import AccountsUIWrapper from './AccountsUIWrapper.js';
+import Profile from './Profile.js';
 
 class FreeClassrooms extends Component {
   constructor(props) {
@@ -93,12 +95,38 @@ class FreeClassrooms extends Component {
     clearInterval(this.interval);
   }
 
+  reportOccupied(name) {
+    let hours = this.state.time.getHours();
+    let minutes = this.state.time.getMinutes();
+    let start = hours*100+minutes;
+    let end = Math.min(2359, (hours+1)*100+minutes);
+    if(start<999) start = '0'+start;
+    if(end<999) end = '0'+end;
+    Meteor.call('classrooms.reportOccupied', '05-10-18', name, start+'', end+'', (err, res) =>{
+      if(err) alert(err);
+      console.log('reportOccupied: '+res);
+    });
+
+    let dd = this.state.time.getDate();
+    let mm = this.state.time.getMonth() + 1;
+    let yy = this.state.time.getFullYear().toString().substr(-2);
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', Date.now(), (err, res) => {
+      if(err) alert(err);
+      console.log('reportOccupied2: '+res);
+    });
+  }
+
   render() {
 
     const freeClassrooms = this.computeFreeClassrooms();
 
     return (
       <div>
+        <AccountsUIWrapper /> 
+        <br/>
         <button onClick={() => this.fetchSchedules()}>Test method</button>
         <p>Hours</p>
         <input ref={ref => this.hour = ref} type="text" />
@@ -109,9 +137,11 @@ class FreeClassrooms extends Component {
           {freeClassrooms.map(free =>
             <li key={free.name}>
               {free.name}: {free.minutesLeft}
+              {this.props.user ? <button onClick={() => this.reportOccupied(free.name)}>report occupied</button> : undefined }
             </li>
           )}
         </ul>
+        <Profile />
       </div>
     );
   }
@@ -119,13 +149,15 @@ class FreeClassrooms extends Component {
 }
 
 FreeClassrooms.propTypes = {
-  dateClassrooms: PropTypes.object
+  dateClassrooms: PropTypes.object,
+  user: PropTypes.object
 };
 
 export default withTracker(() => {
   Meteor.subscribe('classrooms');
 
   return {
-    dateClassrooms: Classrooms.findOne()
+    dateClassrooms: Classrooms.findOne(),
+    user: Meteor.user()
   };
 })(FreeClassrooms);
