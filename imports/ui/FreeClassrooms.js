@@ -100,12 +100,9 @@ class FreeClassrooms extends Component {
     let minutes = this.state.time.getMinutes();
     let start = hours*100+minutes;
     let end = Math.min(2359, (hours+1)*100+minutes);
-    if(start<999) start = '0'+start;
-    if(end<999) end = '0'+end;
-    Meteor.call('classrooms.reportOccupied', '05-10-18', name, start+'', end+'', (err, res) =>{
-      if(err) alert(err);
-      console.log('reportOccupied: '+res);
-    });
+    if(start<1000) start = '0'+start;
+    if(end<1000) end = '0'+end;
+    const ts = Date.now();
 
     let dd = this.state.time.getDate();
     let mm = this.state.time.getMonth() + 1;
@@ -113,9 +110,12 @@ class FreeClassrooms extends Component {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
-    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', Date.now(), (err, res) => {
+    Meteor.call('classrooms.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', ts, (err) =>{
       if(err) alert(err);
-      console.log('reportOccupied2: '+res);
+    });
+
+    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', ts, (err) => {
+      if(err) alert(err);
     });
   }
 

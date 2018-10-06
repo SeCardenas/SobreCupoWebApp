@@ -13,7 +13,7 @@ class Profile extends Component {
           <p>número de contribuciones: {this.props.info.history.length}</p>
           <p>Últimas contribuciones:</p>
           <div>
-            {this.props.info.history.slice(-5).map((c, i) => {
+            {this.props.info.history.slice(-5).reverse().map((c, i) => {
               return (
                 <div key={i}>
                   <span>fecha: {c.date} </span>
