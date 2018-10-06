@@ -8,17 +8,22 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 class App extends React.Component {
 
-  logOut(){
+  logOut() {
     AccountsTemplates.logout();
   }
 
   render() {
     return (
       <div className='app-container'>
-        <div>
+        <nav className='topbar'>
+          <img src="assets/logo.png" alt="Logo"/>
           <h1>Sobrecupo</h1>
-          {this.props.user ? <button onClick={() => this.logOut()}>Cerrar sesión</button> : <button onClick={() => FlowRouter.go('access')}>Iniciar sesión</button> }
-        </div>
+          {this.props.user ?
+            <button onClick={() => this.logOut()}>Cerrar sesión</button> :
+            FlowRouter.getRouteName() === 'access' ?
+              <button onClick={() => FlowRouter.go('home')}>Volver al inicio</button> :
+              <button onClick={() => FlowRouter.go('access')}>Iniciar sesión</button>}
+        </nav>
         {this.props.main}
       </div>
     );
