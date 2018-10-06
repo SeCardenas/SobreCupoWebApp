@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Classrooms } from '../api/classrooms.js';
 import AccountsUIWrapper from './AccountsUIWrapper.js';
+import Profile from './Profile.js';
 
 class FreeClassrooms extends Component {
   constructor(props) {

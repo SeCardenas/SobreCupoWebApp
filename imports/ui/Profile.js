@@ -3,6 +3,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Profiles } from '../api/profiles.js';
+import HistoryItem from './HistoryItem.js';
 import './Profile.css';
 
 class Profile extends Component {
@@ -20,7 +21,6 @@ class Profile extends Component {
   }
 
   render() {
-
     return (
       this.props.info ? 
         <div>
@@ -30,13 +30,8 @@ class Profile extends Component {
           <div className='history'>
             {this.props.info.history.slice(-this.state.numElements).reverse().map((c, i) => {
               return (
-                <div key={i} className='history-item'>
-                  <span className='history-item-date'> {c.date}: </span>
-                  <div className='history-item-info'>
-                    <span> {c.classroom}: </span>
-                    <span> {c.start.substr(0,2)+':'+c.start.substr(2)} - {c.end.substr(0,2)+':'+c.end.substr(2)} </span>
-                    <span> {c.type} </span>
-                  </div>
+                <div key={i}>
+                  <HistoryItem contribution={c}/>
                 </div>
               );
             })}
