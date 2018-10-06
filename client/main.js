@@ -27,7 +27,9 @@ AccountsTemplates.configure({
     requiredField: 'Campo requerido'
   },
   onSubmitHook(err){
+    //Don't redirect on failed submit
     if(err) return;
+    //Redirect on successful submit
     FlowRouter.go('home');
     
   }
@@ -37,6 +39,8 @@ let pwd = AccountsTemplates.removeField('password');
 pwd.displayName = 'Contraseña';
 pwd.placeholder = ' ';
 pwd.errStr = 'La contraseña debe tener al menos 6 caracteres de longitud';
+
+//Configure access form -------
 AccountsTemplates.removeField('email');
 AccountsTemplates.addFields([
   {
@@ -73,7 +77,7 @@ AccountsTemplates.addFields([
     required: true,
   }
 ]);
-
+//-----------------------------
 //Router will mount React app and change it's contents accordingly
 FlowRouter.route('/', {
   name: 'home',
@@ -101,3 +105,15 @@ FlowRouter.route('/profiles/:id', {
     });
   },
 });
+
+FlowRouter.notFound = {
+  action() {
+    mount(App, {
+      main: (props => {
+        return(<h1>
+          Esto es vergonzoso...
+        </h1>);
+      })()
+    });
+  }
+};

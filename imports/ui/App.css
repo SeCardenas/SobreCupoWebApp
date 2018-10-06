@@ -4,3 +4,7 @@ html{
   -moz-osx-font-smoothing: grayscale;
   color: #20252b;
 }
+
+nav img{
+  height: 88px;
+}
