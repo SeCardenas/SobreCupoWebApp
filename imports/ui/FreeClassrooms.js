@@ -70,9 +70,15 @@ class FreeClassrooms extends Component {
     this.setState({ time: ch });
   }
 
-  fetchSchedules(){
-    Meteor.call('classrooms.getClassroomSchedules', {date: '05-10-18', classroom: 'ML_603'} ,(err, res) =>{
-      if(err) return alert(err);
+  fetchSchedules() {
+    Meteor.call('test', {
+      date: '05-10-18', classroom: '.ML_603', schedule: {
+        start: '1400',
+        end: '1650',
+        NRC: '34279'
+      }
+    }, (err, res) => {
+      if (err) return alert(err);
       console.log(res);
     });
   }

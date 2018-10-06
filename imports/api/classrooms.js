@@ -19,8 +19,8 @@ Meteor.methods({
   'classrooms.reportOccupied'(day, classroom, from, to) {
     //day: string dd-mm-yy, classroom: string, from: string hhmm, to: string hhmm, timestamp: number
     Classrooms.update(
-      {'date': day, 'classrooms.name': classroom}, 
-      {$push: {'classrooms.$.schedules': {start: from, end: to}}}
+      { 'date': day, 'classrooms.name': classroom },
+      { $push: { 'classrooms.$.schedules': { start: from, end: to } } }
     );
   },
   'classrooms.getClassroomSchedules'({ date, classroom }) {
@@ -42,15 +42,44 @@ Meteor.methods({
       if (searchedClassroom) {
         return searchedClassroom.schedules;
       }
-      else{
-        return({error: 'Classroom does not exist'});
+      else {
+        return ({ error: 'Classroom does not exist' });
       }
     }
     else {
       return ({ error: 'Could not find registers for that day' });
     }
   },
-  'classrooms.reportFree'(day, classroom, from, to, timestamp) {
-    //day: string dd-mm-yy, classroom: string, from: string hhmm, to: string hhmm, timestamp: number
+  'classrooms.reportFree'({ date, classroom, schedule }) {
+
+    //Workaround to meteor's outdated mongoDB version
+
+    const postedOn = Date.now();
+    //Get complete document from DB
+    const newDoc = Classrooms.findOne({ date });
+
+    //Find the classroom to upload the report
+    for (const docClassroom of newDoc.classrooms) {
+      if (docClassroom.name === classroom) {
+        //Find the schedule to upload the report
+        for (let docSchedule of docClassroom.schedules) {
+          if (docSchedule.start === schedule.start && docSchedule.end === schedule.end && docSchedule.NRC === schedule.NRC) {
+            //Modify it
+            docSchedule.report = {
+              type: 'free',
+              user: Meteor.user() ? Meteor.user().username : 'Manrique',
+              time: postedOn
+            };
+            //Found, break cycle
+            break;
+          }
+        }
+        //Found, break cycle
+        break;
+      }
+    }
+
+    //Document has been modified, update it into the DB
+    Classrooms.update({ date }, newDoc);
   }
 });
