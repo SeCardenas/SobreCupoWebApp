@@ -16,8 +16,12 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'classrooms.reportOccupied'(day, classroom, from, to, timestamp) {
+  'classrooms.reportOccupied'(day, classroom, from, to) {
     //day: string dd-mm-yy, classroom: string, from: string hhmm, to: string hhmm, timestamp: number
+    Classrooms.update(
+      {'date': day, 'classrooms.name': classroom}, 
+      {$push: {'classrooms.$.schedules': {start: from, end: to}}}
+    );
   },
   'classrooms.getClassroomSchedules'({ date, classroom }) {
 
