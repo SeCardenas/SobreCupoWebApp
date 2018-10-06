@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Classrooms } from '../api/classrooms.js';
 import AccountsUIWrapper from './AccountsUIWrapper.js';
-import Profile from './Profile.js';
 
 class FreeClassrooms extends Component {
   constructor(props) {
@@ -102,7 +101,6 @@ class FreeClassrooms extends Component {
     let end = Math.min(2359, (hours+1)*100+minutes);
     if(start<1000) start = '0'+start;
     if(end<1000) end = '0'+end;
-    const ts = Date.now();
 
     let dd = this.state.time.getDate();
     let mm = this.state.time.getMonth() + 1;
@@ -110,11 +108,11 @@ class FreeClassrooms extends Component {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
-    Meteor.call('classrooms.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', ts, (err) =>{
+    Meteor.call('classrooms.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', (err) =>{
       if(err) alert(err);
     });
 
-    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', ts, (err) => {
+    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', (err) => {
       if(err) alert(err);
     });
   }
