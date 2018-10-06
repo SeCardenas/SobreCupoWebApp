@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Classrooms } from '../api/classrooms.js';
 import AccountsUIWrapper from './AccountsUIWrapper.js';
-import Profile from './Profile.js';
 
 class FreeClassrooms extends Component {
   constructor(props) {
@@ -139,7 +138,6 @@ class FreeClassrooms extends Component {
             </li>
           )}
         </ul>
-        {this.props.user ? <Profile profile={this.props.user.username} /> : null}
       </div>
     );
   }

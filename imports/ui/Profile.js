@@ -10,13 +10,13 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numElements: 5
+      numElements: 10
     };
   }
 
   showMore() {
     this.setState({
-      numElements: this.state.numElements+5
+      numElements: this.state.numElements+10
     });
   }
 
