@@ -70,6 +70,13 @@ class FreeClassrooms extends Component {
     this.setState({ time: ch });
   }
 
+  fetchSchedules(){
+    Meteor.call('classrooms.getClassroomSchedules', {date: '05-10-18', classroom: 'ML_603'} ,(err, res) =>{
+      if(err) return alert(err);
+      console.log(res);
+    });
+  }
+
   componentDidMount() {
     this.interval = setInterval(() => {
       this.setState({ time: new Date() });
@@ -86,8 +93,7 @@ class FreeClassrooms extends Component {
 
     return (
       <div>
-        <h1>Welcome!</h1>
-        <span>{this.state.time.getMinutes()}</span>
+        <button onClick={() => this.fetchSchedules()}>Test method</button>
         <p>Hours</p>
         <input ref={ref => this.hour = ref} type="text" />
         <p>Minutes</p>
