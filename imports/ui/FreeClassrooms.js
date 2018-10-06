@@ -123,7 +123,6 @@ class FreeClassrooms extends Component {
 
     return (
       <div>
-        <AccountsUIWrapper /> 
         <br/>
         <button onClick={() => this.fetchSchedules()}>Test method</button>
         <p>Hours</p>
