@@ -141,6 +141,7 @@ class FreeClassrooms extends Component {
             </li>
           )}
         </ul>
+        {this.props.user ? <Profile profile={this.props.user.username} /> : null}
       </div>
     );
   }

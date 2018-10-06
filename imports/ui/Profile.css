@@ -1,0 +1,38 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin: 0.3rem;
+  border: 2px solid blueviolet;
+  border-radius: 5px;
+}
+
+.history-item-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.history-item-date {
+  padding-right: 1rem;
+  font-size: 2rem;
+}
+
+.show-more-button {
+  color: blue;
+  text-decoration: underline;
+}
+
+.show-more-button:hover {
+  cursor: pointer;
+}

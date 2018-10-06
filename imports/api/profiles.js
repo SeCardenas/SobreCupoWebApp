@@ -18,7 +18,15 @@ Meteor.methods({
     if (!Meteor.user()) {
       throw Meteor.Error('Not authorized');
     }
-    Profiles.upsert({ name: Meteor.user().username }, { $push: { history: { date, type: 'occupied', classroom, start, end, timestamp } } });
+    Profiles.upsert({ name: Meteor.user().username }, 
+      { 
+        $push: { 
+          history: { 
+            date, type: 'occupied', classroom, start, end, timestamp 
+          } 
+        } 
+      }
+    );
   },
   'profiles.reportFree'({ date, classroom, schedule }) {
     const timestamp = Date.now();
