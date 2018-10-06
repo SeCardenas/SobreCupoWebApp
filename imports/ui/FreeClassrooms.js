@@ -141,7 +141,6 @@ class FreeClassrooms extends Component {
             </li>
           )}
         </ul>
-        <Profile />
       </div>
     );
   }

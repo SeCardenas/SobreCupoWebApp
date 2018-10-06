@@ -71,7 +71,7 @@ Meteor.methods({
             //Modify it
             docSchedule.report = {
               type: 'free',
-              user: Meteor.user() ? Meteor.user().username : 'Manrique',
+              user: Meteor.user().username,
               time: postedOn
             };
             //Found, break cycle

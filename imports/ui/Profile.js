@@ -31,11 +31,12 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  info: PropTypes.object
+  info: PropTypes.object,
+  profile: PropTypes.string.isRequired
 };
 
-export default withTracker(() => {
-  Meteor.subscribe('profiles');
+export default withTracker((props) => {
+  Meteor.subscribe('profiles', props.profile);
 
   return {
     info: Profiles.findOne()

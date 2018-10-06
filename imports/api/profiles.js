@@ -4,8 +4,11 @@ import { Meteor } from 'meteor/meteor';
 export const Profiles = new Mongo.Collection('profiles');
 
 if (Meteor.isServer) {
-  Meteor.publish('profiles', () => {
-    return Profiles.find({ name: Meteor.user().username });
+  Meteor.publish('profiles', profile => {
+    if(!profile)
+      return [];
+    if(Meteor.user())
+      return Profiles.find({ name: profile });
   });
 }
 

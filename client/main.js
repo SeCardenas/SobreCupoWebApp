@@ -7,6 +7,7 @@ import Profile from '../imports/ui/Profile';
 import '../imports/startup/accounts-config.js';
 import './main.html';
 
+//Router will mount React app and change it's contents accordingly
 
 FlowRouter.route('/', {
   name: 'Lists.show',
@@ -17,11 +18,11 @@ FlowRouter.route('/', {
   },
 });
 
-FlowRouter.route('/profiles', {
+FlowRouter.route('/profiles/:id', {
   name: 'Lists.show',
-  action() {
+  action(params) {
     mount(App, {
-      main: <Profile/>,
+      main: <Profile profile={params.id}/>,
     });
   },
 });
