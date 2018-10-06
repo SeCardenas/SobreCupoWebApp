@@ -19,7 +19,7 @@ Meteor.methods({
   'classrooms.reportOccupied'(day, classroom, from, to, timestamp) {
     //day: string dd-mm-yy, classroom: string, from: string hhmm, to: string hhmm, timestamp: number
     Classrooms.update(
-      {'date': day+'.json', 'classrooms.classroom': classroom}, 
+      {'date': day, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start: from, end: to}}}
     );
   },
