@@ -73,7 +73,7 @@ class FreeClassrooms extends Component {
   }
 
   fetchSchedules() {
-    Meteor.call('test', {
+    Meteor.call('classrooms.reportFree', {
       date: '05-10-18', classroom: '.ML_603', schedule: {
         start: '1400',
         end: '1650',

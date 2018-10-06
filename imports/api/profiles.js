@@ -5,16 +5,30 @@ export const Profiles = new Mongo.Collection('profiles');
 
 if (Meteor.isServer) {
   Meteor.publish('profiles', () => {
-    return Profiles.find({name: Meteor.user().username});
+    return Profiles.find({ name: Meteor.user().username });
   });
 }
 
 Meteor.methods({
-  'profiles.reportOccupied'(date, classroom, start, end, timestamp) {
-    const name = Meteor.user().username;
-    if(!name) {
+  'profiles.reportOccupied'(date, classroom, start, end) {
+    const timestamp = Date.now();
+    if (!Meteor.user()) {
       throw Meteor.Error('Not authorized');
     }
-    Profiles.upsert({name}, {$push: {history: {date, classroom, start, end, timestamp}}});
+    Profiles.upsert({ name: Meteor.user().username }, { $push: { history: { date, type: 'occupied', classroom, start, end, timestamp } } });
+  },
+  'profiles.reportFree'({ date, classroom, schedule }) {
+    const timestamp = Date.now();
+    if (!Meteor.user()) {
+      throw Meteor.Error('Not authorized');
+    }
+    Profiles.upsert({ name: Meteor.user().username },
+      {
+        $push: {
+          history: {
+            date, type: 'free', classroom, start: schedule.start, end: schedule.end, timestamp
+          }
+        }
+      });
   }
 });

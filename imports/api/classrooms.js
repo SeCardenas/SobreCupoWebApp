@@ -56,8 +56,8 @@ Meteor.methods({
   },
   'classrooms.reportFree'({ date, classroom, schedule }) {
 
+    if(!Meteor.user()) return new Meteor.Error('Unauthorized');
     //Workaround to meteor's outdated mongoDB version
-
     const postedOn = Date.now();
     //Get complete document from DB
     const newDoc = Classrooms.findOne({ date });
