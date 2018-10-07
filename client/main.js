@@ -23,6 +23,8 @@ AccountsTemplates.configure({
       signIn: 'Iniciar sesión',
       signUp: 'Crear una cuenta',
     },
+    signInLink_pre: '¿Ya tienes una cuenta?',
+    signInLink_link: 'Inicia sesión',
     signUpLink_pre: '¿No tienes una cuenta?',
     signUpLink_link: '¡Regístrate!',
     requiredField: 'Campo requerido'
@@ -57,7 +59,7 @@ AccountsTemplates.addFields([
     _id: 'username',
     type: 'text',
     displayName: 'Usuario',
-    placeholder: 'perez.p',
+    placeholder: 'perez.pep',
     required: true,
     minLength: 5,
     errStr: 'El usuario debe tener al menos 5 caracteres de longitud'
@@ -67,7 +69,7 @@ AccountsTemplates.addFields([
     type: 'text',
     required: true,
     displayName: 'Usuario o email',
-    placeholder: 'ja.manrique // ja.manrique@uniandes.edu.co'
+    placeholder: 'perez.pep // p.perez@uniandes.edu.co'
   },
   pwd,
   {

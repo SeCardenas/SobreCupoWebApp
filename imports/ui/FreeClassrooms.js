@@ -92,29 +92,6 @@ class FreeClassrooms extends Component {
     clearInterval(this.interval);
   }
 
-  reportOccupied(name) {
-    let hours = this.state.time.getHours();
-    let minutes = this.state.time.getMinutes();
-    let start = hours*100+minutes;
-    let end = Math.min(2359, (hours+1)*100+minutes);
-    if(start<1000) start = '0'+start;
-    if(end<1000) end = '0'+end;
-
-    let dd = this.state.time.getDate();
-    let mm = this.state.time.getMonth() + 1;
-    let yy = this.state.time.getFullYear().toString().substr(-2);
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = '0' + mm;
-
-    Meteor.call('classrooms.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', (err) =>{
-      if(err) alert(err);
-    });
-
-    Meteor.call('profiles.reportOccupied', dd + '-' + mm + '-' + yy, name, start+'', end+'', (err) => {
-      if(err) alert(err);
-    });
-  }
-
   render() {
 
     const freeClassrooms = this.computeFreeClassrooms();

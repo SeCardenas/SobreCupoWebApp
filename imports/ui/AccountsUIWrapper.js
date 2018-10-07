@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import './Access.css';
 
 
 class AccountsUIWrapper extends Component {
@@ -22,7 +23,7 @@ class AccountsUIWrapper extends Component {
     this.view = Blaze.render(Template.atForm, this.login);
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     if (this.props.user) {
       console.log('Redirecting...');
       FlowRouter.go('home');
@@ -35,7 +36,14 @@ class AccountsUIWrapper extends Component {
   }
   render() {
     // Just render a placeholder container that will be filled in
-    return <span ref={login => this.login = login} />;
+    return (
+      <div className='access-container'>
+        <span 
+          className='access-form'
+          ref={login => this.login = login} 
+        />
+      </div>
+    );
   }
 }
 
