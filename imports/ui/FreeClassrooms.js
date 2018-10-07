@@ -3,8 +3,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { Classrooms } from '../api/classrooms.js';
-import AccountsUIWrapper from './AccountsUIWrapper.js';
-import Profile from './Profile.js';
+import './FreeClassrooms.css';
+import FreeClassroom from './FreeClassroom';
 
 class FreeClassrooms extends Component {
   constructor(props) {
@@ -22,10 +22,7 @@ class FreeClassrooms extends Component {
     //integer time format (same as course's time format) i.e. [1350, 0743, 1822]
     const now = this.state.time.getHours() * 100 + this.state.time.getMinutes();
 
-    console.log(this.props.dateClassrooms);
-
     if (this.props.dateClassrooms) {
-      console.log(typeof (this.props.dateClassrooms.classrooms));
 
       for (const clasroom of this.props.dateClassrooms.classrooms) {
 
@@ -123,23 +120,16 @@ class FreeClassrooms extends Component {
     const freeClassrooms = this.computeFreeClassrooms();
 
     return (
-      <div>
-        <br/>
-        <button onClick={() => this.fetchSchedules()}>Test method</button>
-        <p>Hours</p>
-        <input ref={ref => this.hour = ref} type="text" />
-        <p>Minutes</p>
-        <input ref={ref => this.min = ref} type="text" />
-        <button onClick={() => this.updateClassrooms()}>Update</button>
-        <ul>
+      <div className='classrooms-container'>
+        <h3>Salones disponibles en este momento:</h3>
+        <ul className='classroom-list'>
           {freeClassrooms.map(free =>
-            <li key={free.name}>
-              {free.name}: {free.minutesLeft}
-              {this.props.user ? <button onClick={() => this.reportOccupied(free.name)}>report occupied</button> : undefined }
-            </li>
+            <FreeClassroom 
+              key={free.name}
+              classroom={free}
+              user={this.props.user}/>
           )}
         </ul>
-        {this.props.user ? <Profile profile={this.props.user.username} /> : null}
       </div>
     );
   }

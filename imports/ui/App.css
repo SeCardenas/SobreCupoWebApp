@@ -1,10 +1,102 @@
+:root{
+  --sc-yellow: #ffc600;
+  --sc-black: #272727;
+}
+
 html{  
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #20252b;
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
+
+.react-root{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.app-topbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--sc-black);
+  padding: 8px;
+  border-bottom: 2px var(--sc-yellow) solid;
+}
+
+.title-logo-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-logo-container h1{
+  font-size: 2.2rem;
+  margin: 0px;
+  margin-left: 8px;
+  font-weight: 550;
+  color: whitesmoke;
+}
+
+.title-logo-container h2{
+  font-size: 1.6rem;
+  margin: 0px;
+  margin-top: -4px;
+  margin-left: 8px;
+  font-weight: 100;
+  color: whitesmoke;
+}
+
 
 nav img{
   height: 88px;
+}
+
+#react-root .app-container button{
+  display: flex;
+  background-color: transparent;
+  border: 2px var(--sc-yellow) solid;
+  padding: 4px;
+  border-radius: 2px;
+  cursor: pointer;
+  background: linear-gradient(0deg, var(--sc-yellow) 0%, transparent 100%) no-repeat;
+  background-position-y: 32px;
+  transition: all 0.25s ease-in-out;
+  margin: 4px;
+}
+
+#react-root .app-container button:hover{
+  background-position-y: 0;
+  color: var(--sc-black);
+}
+
+#react-root .app-container button:active{
+  background-color: var(--sc-black);
+  color: whitesmoke;
+  border-color: #be9500
+}
+
+#react-root nav button{
+  color: var(--sc-yellow);
+  font-size: 1.3rem;
+}
+
+#react-root .app-container nav button:hover{
+  background-position-y: 0;
+  color: whitesmoke;
+}
+
+#react-root .app-container nav button:active{
+  background-color: whitesmoke;
 }

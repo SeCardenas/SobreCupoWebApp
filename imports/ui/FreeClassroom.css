@@ -1,0 +1,72 @@
+.free-classroom-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 138px;
+  max-width: 300px;
+  min-height: 138px;
+  margin: 6px;
+  border: 2px var(--sc-yellow)solid;
+  border-radius: 2px;
+  padding: 0px 4px;
+}
+
+.free-classroom-container strong{
+  font-size: 1.8rem;
+}
+
+.icons-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.icon{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  cursor: pointer;
+}
+
+.icon small{
+  font-size: 0.6rem;
+  margin-top: -4px;
+}
+
+.icon i{
+
+}
+
+.icon span{
+  position: absolute;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  opacity: 0;
+  top: 0;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.4);
+  text-align: center;
+  width: 104px;
+}
+
+.icon:hover span{
+  opacity: 1;
+  top: 24px;
+}
+
+.classroom-score{
+  position: absolute;
+  right: 4px;
+  top: 2px;
+}
+
+.free-classroom-container input{
+  width: 90%;
+  font-size: 0.76rem;
+}
