@@ -34,13 +34,13 @@ Meteor.methods({
     if (mm < 10) mm = '0' + mm;
 
     const date = dd + '-' + mm + '-' + yy;
-    const time = Date.now();
+    const timestamp = Date.now();
 
     Profiles.upsert({ name: Meteor.user().username },
       {
         $push: {
           history: {
-            date, type: 'occupied', classroom, start, end, time
+            date, type: 'occupied', classroom, start, end, timestamp
           }
         }
       }

@@ -71,6 +71,10 @@ class ReportFree extends Component {
         if (err) this.setState({ errorMessage: err.message, sendingReport: false });
         this.setState({ successMessage: 'Reporte enviado correctamente' });
       });
+
+      Meteor.call('profile.reportFree', { classroom: this.state.selectedClassroom, schedule }, (err) => {
+        if (err) this.setState({ errorMessage: err.message, sendingReport: false });
+      });
     }
     else {
       this.setState({ errorMessage: 'Hubo un error en la página extrayendo los datos del formulario', sendingReport: false });
