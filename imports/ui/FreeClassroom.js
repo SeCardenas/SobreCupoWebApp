@@ -34,8 +34,8 @@ class FreeClassroom extends Component {
     }
 
     Meteor.call('classrooms.reportOccupied', name, (err) => {
-      if (err) {this.setState({ errorMessage: err.message }); return;}
-      this.setState({reporting: false, confirmedReport: true, successMessage: 'Reporte enviado'});
+      if (err) { this.setState({ errorMessage: err.message }); return; }
+      this.setState({ reporting: false, confirmedReport: true, successMessage: 'Reporte enviado' });
     });
 
     Meteor.call('profiles.reportOccupied', name, (err) => {
@@ -44,28 +44,45 @@ class FreeClassroom extends Component {
   }
 
   generateUserReportList(reportList) {
-    let str = '';
+    let userList = [];
 
     for (const report of reportList) {
-      str += report.user + ', ';
+      userList.push(report.user);
     }
 
-    return str.substr(0, str.length - 2);
+    const jsx = userList.map((el, i) => {
+      //Return without comma the last element
+      if (i === userList.length - 1)
+        return (<cite key={i + el}><a href={`/profiles/${el}`}> {el} </a></cite>);
+      return (<cite key={i + el}><a href={`/profiles/${el}`}> {el} </a>,</cite>);
+    });
+
+    return (<p className='error-message'>
+      Este salón fue reportado ocupado por: {jsx}
+    </p>);
   }
 
   confirmClassroom() {
-    this.setState({confirming: true});
-    Meteor.call('classrooms.upvote', this.props.classroom.name, (err) => {
-      if (err) {this.setState({ errorMessage: err.message, confirming: false }); return;}
-      this.setState({confirmedUpvote: true, successMessage: '¡Voto registrado!'});
-    });
+    //Only confirm if user exists
+    if (this.props.user) {
+      this.setState({ confirming: true });
+      Meteor.call('classrooms.upvote', this.props.classroom.name, (err) => {
+        if (err) { this.setState({ errorMessage: err.message, confirming: false }); return; }
+        this.setState({ confirmedUpvote: true, successMessage: '¡Voto registrado!' });
+      });
+    }
+    else{
+      this.setState({ confirming: !this.state.confirming });
+    }
   }
 
-  hasUserSentReport(){
-    for(const report of this.props.classroom.occupiedReports){
-      if(report.user === this.props.user.username)
-        return true;
-    }
+  hasUserSentReport() {
+    //If the user is logged in, check if it has sent reports
+    if (this.props.user)
+      for (const report of this.props.classroom.occupiedReports) {
+        if (report.user === this.props.user.username)
+          return true;
+      }
     return false;
   }
 
@@ -78,13 +95,20 @@ class FreeClassroom extends Component {
         <p>
           {this.props.classroom.minutesLeft}
         </p>
-        {this.props.classroom.occupiedReports.length > 0 ?
-          <p className='error-message'>
-            Este salón fue reportado ocupado por: {this.generateUserReportList(this.props.classroom.occupiedReports)}
+
+        {this.props.classroom.freeReport ?
+          <p className='success-message'>Este salón fue reportado libre por: 
+            <a href={`/profiles/${this.props.classroom.freeReport.user}`}>
+              {this.props.classroom.freeReport.user}
+            </a>
           </p> : null}
+
+        {this.props.classroom.occupiedReports.length > 0 ?
+          this.generateUserReportList(this.props.classroom.occupiedReports) : null}
+
         <div className='icons-container'>
           <div className='icon'>
-            <i className={this.state.confirmedReport || this.hasUserSentReport() ? 'material-icons disabled': 'material-icons'}
+            <i className={this.state.confirmedReport || this.hasUserSentReport() ? 'material-icons disabled' : 'material-icons'}
               onClick={() => this.state.confirmedReport || this.hasUserSentReport() ? null : this.setState({ reporting: !this.state.reporting })}>
               error_outline
             </i>
@@ -94,11 +118,11 @@ class FreeClassroom extends Component {
             </span>
           </div>
           <div className='icon'>
-            <i className={this.state.confirmedUpvote ? 'material-icons disabled': 'material-icons'}
+            <i className={this.state.confirmedUpvote ? 'material-icons disabled' : 'material-icons'}
               onClick={() => this.state.confirmedUpvote ? null : this.confirmClassroom()}>
               check_circle_outline
             </i>
-            <small className={this.state.confirmedUpvote ? 'disabled': null}>Confirmar</small>
+            <small className={this.state.confirmedUpvote ? 'disabled' : null}>Confirmar</small>
             <span>
               ¡Este salón está disponible!
             </span>

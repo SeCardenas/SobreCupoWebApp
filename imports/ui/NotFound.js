@@ -9,7 +9,7 @@ export default class NotFound extends Component {
         <div className='not-found-content'>
           <h1 className='not-found-title'>404</h1>
           <h2 className='not-found-subtitle'>Page not found!</h2>
-          <span className='not-found-msg'>The page you ar trying to access does not exist.</span>
+          <span className='not-found-msg'>The page you are trying to access does not exist.</span>
         </div>
       </div>
     );

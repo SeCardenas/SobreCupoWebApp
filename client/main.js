@@ -9,6 +9,7 @@ import '../imports/startup/accounts-config.js';
 import './main.html';
 import AccountsUIWrapper from '../imports/ui/AccountsUIWrapper';
 import NotFound from '../imports/ui/NotFound.js';
+import ReportFree from '../imports/ui/ReportFree.js';
 
 AccountsTemplates.configure({
   texts: {
@@ -105,6 +106,15 @@ FlowRouter.route('/profiles/:id', {
   action(params) {
     mount(App, {
       main: <Profile profile={params.id} />,
+    });
+  },
+});
+
+FlowRouter.route('/reportFree', {
+  name: 'profiles.explore',
+  action() {
+    mount(App, {
+      main: <ReportFree />,
     });
   },
 });

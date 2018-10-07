@@ -75,7 +75,7 @@ Meteor.methods({
         time
       }}}}
     );
-  },
+  },/* Not neede, client already has all the info
   'classrooms.getClassroomSchedules'({ date, classroom }) {
 
     if (!date) return ({ error: 'Request should include a date' });
@@ -102,8 +102,17 @@ Meteor.methods({
     else {
       return ({ error: 'Could not find registers for that day' });
     }
-  },
-  'classrooms.reportFree'({ date, classroom, schedule }) {
+  } */
+  'classrooms.reportFree'({ classroom, schedule }) {
+
+    const servDate = new Date();
+    let dd = servDate.getDate()-3;
+    let mm = servDate.getMonth() + 1;
+    let yy = servDate.getFullYear().toString().substr(-2);
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const date = dd + '-' + mm + '-' + yy;
 
     if(!Meteor.user()) return new Meteor.Error('Unauthorized');
     //Workaround to meteor's outdated mongoDB version
