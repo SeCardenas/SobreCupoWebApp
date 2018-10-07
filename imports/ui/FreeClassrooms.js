@@ -27,6 +27,7 @@ class FreeClassrooms extends Component {
       for (const classroom of this.props.dateClassrooms.classrooms) {
 
         let isFree = true;
+        let occupiedReports = [];
         let minutesLeft = 'Todo el día';
         let upvotes = 0;
         let wasUpvoted = false;
@@ -37,27 +38,31 @@ class FreeClassrooms extends Component {
           const end = parseInt(schedule.end);
 
           if (start <= now && now < end) {
-            if(schedule.report.type === 'occupied') {
-              isFree = false;
-              break;
-            }
-            else if(schedule.report.type === 'upvote') {
+            if (schedule.report && schedule.report.type === 'upvote') {
               upvotes++;
-              if(Meteor.user()) {
-                if(Meteor.user().username === schedule.report.user) {
+              if (Meteor.user()) {
+                if (Meteor.user().username === schedule.report.user) {
                   wasUpvoted = true;
                 }
               }
             }
+            else if (schedule.report && schedule.report.type === 'occupied') {
+              occupiedReports.push(schedule.report);
+            }
+            else {
+              isFree = false;
+              break;
+            }
           }
 
           if (start > now) {
-            const startHour = parseInt(schedule.start.substr(0, 2));
-            const startMinute = parseInt(schedule.start.substr(-2));
+            const startHour = parseInt(schedule.start.toString().substr(0, 2));
+            const startMinute = parseInt(schedule.start.toString().substr(-2));
             const diff = (startHour - this.state.time.getHours()) * 60 + startMinute - this.state.time.getMinutes();
             if (minutesLeft === 'Todo el día' || diff < minutesLeft) {
               minutesLeft = diff;
             }
+
           }
         }
         if (isFree && classroom.name !== '.' && classroom.name !== '.NOREQ' && classroom.name !== '.LIGA_ATLET') {
@@ -66,7 +71,8 @@ class FreeClassrooms extends Component {
             name: classroom.name,
             minutesLeft,
             upvotes,
-            wasUpvoted
+            wasUpvoted,
+            occupiedReports
           };
 
           freeClassrooms.push(freeclassroom);
@@ -115,10 +121,10 @@ class FreeClassrooms extends Component {
         <h3>Salones disponibles en este momento:</h3>
         <ul className='classroom-list'>
           {freeClassrooms.map(free =>
-            <FreeClassroom 
+            <FreeClassroom
               key={free.name}
               classroom={free}
-              user={this.props.user}/>
+              user={this.props.user} />
           )}
         </ul>
       </div>

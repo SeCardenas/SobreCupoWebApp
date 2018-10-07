@@ -9,7 +9,10 @@ class FreeClassroom extends Component {
     this.state = {
       reporting: false,
       confirming: false,
-      errorMessage: ''
+      confirmedUpvote: this.props.classroom.wasUpvoted,
+      confirmedReport: false,
+      errorMessage: '',
+      successMessage: ''
     };
   }
 
@@ -20,23 +23,50 @@ class FreeClassroom extends Component {
 
   reportOccupied() {
 
-    this.setState({errorMessage: ''});
+    this.setState({ errorMessage: '' });
 
     const name = this.props.classroom.name;
     const reason = this.input.value;
 
-    if(!reason){
-      this.setState({errorMessage: 'Es necesario incluir un motivo para reportar el salón ("La puerta está cerrada" es un motivo válido)'});
+    if (!reason) {
+      this.setState({ errorMessage: 'Es necesario incluir un motivo para reportar el salón' });
       return;
-    }    
+    }
 
     Meteor.call('classrooms.reportOccupied', name, (err) => {
-      if (err) this.setState({errorMessage: err.message});
+      if (err) {this.setState({ errorMessage: err.message }); return;}
+      this.setState({reporting: false, confirmedReport: true, successMessage: 'Reporte enviado'});
     });
 
     Meteor.call('profiles.reportOccupied', name, (err) => {
-      if (err) this.setState({errorMessage: err.message});
+      if (err) this.setState({ errorMessage: err.message });
     });
+  }
+
+  generateUserReportList(reportList) {
+    let str = '';
+
+    for (const report of reportList) {
+      str += report.user + ', ';
+    }
+
+    return str.substr(0, str.length - 2);
+  }
+
+  confirmClassroom() {
+    this.setState({confirming: true});
+    Meteor.call('classrooms.upvote', this.props.classroom.name, (err) => {
+      if (err) {this.setState({ errorMessage: err.message, confirming: false }); return;}
+      this.setState({confirmedUpvote: true, successMessage: '¡Voto registrado!'});
+    });
+  }
+
+  hasUserSentReport(){
+    for(const report of this.props.classroom.occupiedReports){
+      if(report.user === this.props.user.username)
+        return true;
+    }
+    return false;
   }
 
   render() {
@@ -48,10 +78,14 @@ class FreeClassroom extends Component {
         <p>
           {this.props.classroom.minutesLeft}
         </p>
+        {this.props.classroom.occupiedReports.length > 0 ?
+          <p className='error-message'>
+            Este salón fue reportado ocupado por: {this.generateUserReportList(this.props.classroom.occupiedReports)}
+          </p> : null}
         <div className='icons-container'>
           <div className='icon'>
-            <i className="material-icons"
-              onClick={() => this.setState({ reporting: !this.state.reporting })}>
+            <i className={this.state.confirmedReport || this.hasUserSentReport() ? 'material-icons disabled': 'material-icons'}
+              onClick={() => this.state.confirmedReport || this.hasUserSentReport() ? null : this.setState({ reporting: !this.state.reporting })}>
               error_outline
             </i>
             <small>Reportar</small>
@@ -60,11 +94,11 @@ class FreeClassroom extends Component {
             </span>
           </div>
           <div className='icon'>
-            <i className="material-icons"
-              onClick={() => this.setState({ confirming: !this.state.confirming })}>
+            <i className={this.state.confirmedUpvote ? 'material-icons disabled': 'material-icons'}
+              onClick={() => this.state.confirmedUpvote ? null : this.confirmClassroom()}>
               check_circle_outline
             </i>
-            <small>Confirmar</small>
+            <small className={this.state.confirmedUpvote ? 'disabled': null}>Confirmar</small>
             <span>
               ¡Este salón está disponible!
             </span>
@@ -97,6 +131,9 @@ class FreeClassroom extends Component {
 
         {this.state.errorMessage ?
           <p className='error-message'>{this.state.errorMessage}</p>
+          : null}
+        {this.state.successMessage ?
+          <p className='success-message'>{this.state.successMessage}</p>
           : null}
         <small className='classroom-score'>
           +{this.props.classroom.upvotes}
