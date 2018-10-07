@@ -99,7 +99,7 @@ class FreeClassroom extends Component {
           <p className='error-message'>{this.state.errorMessage}</p>
           : null}
         <small className='classroom-score'>
-          ±0
+          +{this.props.classroom.upvotes}
         </small>
       </li>
     );

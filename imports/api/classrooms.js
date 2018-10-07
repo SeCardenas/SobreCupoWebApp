@@ -6,7 +6,7 @@ export const Classrooms = new Mongo.Collection('classrooms');
 if (Meteor.isServer) {
   Meteor.publish('classrooms', () => {
     let d = new Date();
-    let dd = d.getDate();
+    let dd = d.getDate()-3;
     let mm = d.getMonth() + 1;
     let yy = d.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -43,6 +43,19 @@ Meteor.methods({
       {'date': date, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start, end, report:{
         type: 'occupied',
+        user: Meteor.user().username,
+        time
+      }}}}
+    );
+  },
+  'classrooms.upvote'(date, classroom, from, to) {
+    if(!Meteor.user()) return new Meteor.Error('Unauthorized');
+
+    const time = Date.now();
+    Classrooms.update(
+      {'date': date, 'classrooms.name': classroom}, 
+      {$push: {'classrooms.$.schedules': {start: from, end: to, report:{
+        type: 'upvote',
         user: Meteor.user().username,
         time
       }}}}

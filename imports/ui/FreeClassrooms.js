@@ -24,19 +24,31 @@ class FreeClassrooms extends Component {
 
     if (this.props.dateClassrooms) {
 
-      for (const clasroom of this.props.dateClassrooms.classrooms) {
+      for (const classroom of this.props.dateClassrooms.classrooms) {
 
         let isFree = true;
         let minutesLeft = 'Todo el día';
+        let upvotes = 0;
+        let wasUpvoted = false;
 
-        for (const schedule of clasroom.schedules) {
+        for (const schedule of classroom.schedules) {
 
           const start = parseInt(schedule.start);
           const end = parseInt(schedule.end);
 
           if (start <= now && now < end) {
-            isFree = false;
-            break;
+            if(schedule.report.type === 'occupied') {
+              isFree = false;
+              break;
+            }
+            else if(schedule.report.type === 'upvote') {
+              upvotes++;
+              if(Meteor.user()) {
+                if(Meteor.user().username === schedule.report.user) {
+                  wasUpvoted = true;
+                }
+              }
+            }
           }
 
           if (start > now) {
@@ -48,14 +60,16 @@ class FreeClassrooms extends Component {
             }
           }
         }
-        if (isFree && clasroom.name !== '.' && clasroom.name !== '.NOREQ') {
+        if (isFree && classroom.name !== '.' && classroom.name !== '.NOREQ' && classroom.name !== '.LIGA_ATLET') {
 
-          let freeClasroom = {
-            name: clasroom.name,
-            minutesLeft
+          let freeclassroom = {
+            name: classroom.name,
+            minutesLeft,
+            upvotes,
+            wasUpvoted
           };
 
-          freeClassrooms.push(freeClasroom);
+          freeClassrooms.push(freeclassroom);
         }
       }
     }
