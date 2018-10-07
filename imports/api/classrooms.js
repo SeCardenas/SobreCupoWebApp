@@ -18,11 +18,23 @@ if (Meteor.isServer) {
 Meteor.methods({
   'classrooms.reportOccupied'(date, classroom, from, to, time) {
     //day: string dd-mm-yy, classroom: string, from: string hhmm, to: string hhmm
+    if(!Meteor.user()) return new Meteor.Error('Unauthorized');
     Classrooms.update(
       {'date': date, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start: from, end: to, report:{
         type: 'occupied',
-        user: Meteor.user() ? Meteor.user().username : 'Manrique',
+        user: Meteor.user().username,
+        time
+      }}}}
+    );
+  },
+  'classrooms.upvote'(date, classroom, from, to, time) {
+    if(!Meteor.user()) return new Meteor.Error('Unauthorized');
+    Classrooms.update(
+      {'date': date, 'classrooms.name': classroom}, 
+      {$push: {'classrooms.$.schedules': {start: from, end: to, report:{
+        type: 'upvote',
+        user: Meteor.user().username,
         time
       }}}}
     );

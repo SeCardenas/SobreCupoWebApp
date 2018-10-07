@@ -6,7 +6,7 @@ import { Profiles } from '../imports/api/profiles.js';
 
 const onSignUp = (id, info) => {
   console.log(id);
-  Profiles.insert({name: info.username, history: []});
+  Profiles.insert({name: info.username, history: [], upvotes: 0});
 };
 
 AccountsTemplates.configure({

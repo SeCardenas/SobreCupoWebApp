@@ -61,7 +61,7 @@ class FreeClassroom extends Component {
             }
           </div> : null}
         <small className='classroom-score'>
-          ±0
+          +{this.props.classroom.upvotes}
         </small>
       </li>
     );

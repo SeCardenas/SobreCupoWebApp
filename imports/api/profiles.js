@@ -7,8 +7,7 @@ if (Meteor.isServer) {
   Meteor.publish('profiles', profile => {
     if(!profile)
       return [];
-    if(Meteor.user())
-      return Profiles.find({ name: profile });
+    return Profiles.find({ name: profile });
   });
 }
 
@@ -16,7 +15,7 @@ Meteor.methods({
   'profiles.reportOccupied'(date, classroom, start, end) {
     const timestamp = Date.now();
     if (!Meteor.user()) {
-      throw Meteor.Error('Not authorized');
+      throw new Meteor.Error('Not authorized');
     }
     Profiles.upsert({ name: Meteor.user().username }, 
       { 
@@ -28,10 +27,18 @@ Meteor.methods({
       }
     );
   },
+  'profiles.upvote'() {
+    if (!Meteor.user()) {
+      throw new Meteor.Error('Not authorized');
+    }
+    Profiles.upsert({ name: Meteor.user().username }, 
+      {$inc: {upvotes: 1}}
+    );
+  },
   'profiles.reportFree'({ date, classroom, schedule }) {
     const timestamp = Date.now();
     if (!Meteor.user()) {
-      throw Meteor.Error('Not authorized');
+      throw new Meteor.Error('Not authorized');
     }
     Profiles.upsert({ name: Meteor.user().username },
       {
