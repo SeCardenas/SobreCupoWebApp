@@ -1,0 +1,27 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Acme', sans-serif;
+}
+
+.not-found-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.not-found-title {
+  color: #00ceff;
+  font-size: 10rem;
+  font-weight: bold;
+  text-shadow: 5px 5px #008cff;
+}
+
+.not-found-subtitle {
+  color: #0058ff;
+  font-size: 4rem;
+  margin-top: -1rem;
+}

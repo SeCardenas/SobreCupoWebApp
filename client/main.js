@@ -8,6 +8,7 @@ import Profile from '../imports/ui/Profile';
 import '../imports/startup/accounts-config.js';
 import './main.html';
 import AccountsUIWrapper from '../imports/ui/AccountsUIWrapper';
+import NotFound from '../imports/ui/NotFound.js';
 
 AccountsTemplates.configure({
   texts: {
@@ -109,10 +110,8 @@ FlowRouter.route('/profiles/:id', {
 FlowRouter.notFound = {
   action() {
     mount(App, {
-      main: (props => {
-        return(<h1>
-          Esto es vergonzoso...
-        </h1>);
+      main: (() => {
+        return <NotFound />;
       })()
     });
   }
