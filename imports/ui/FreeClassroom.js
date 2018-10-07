@@ -38,7 +38,7 @@ class FreeClassroom extends Component {
       this.setState({ reporting: false, confirmedReport: true, successMessage: 'Reporte enviado' });
     });
 
-    Meteor.call('profiles.reportOccupied', name, (err) => {
+    Meteor.call('profiles.reportOccupied', name, reason, (err) => {
       if (err) this.setState({ errorMessage: err.message });
     });
   }

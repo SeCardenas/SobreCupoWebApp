@@ -3,10 +3,20 @@ import { Meteor } from 'meteor/meteor';
 
 export const Classrooms = new Mongo.Collection('classrooms');
 
+const generateUTC_5 = () => {
+  const localDate = new Date();
+
+  const offsetMillis = localDate.getTimezoneOffset()/*m*/*60/*s*/*1000/*ms*/;
+  const UTC0 = Date.now() + offsetMillis;
+  const UTC_5 = UTC0 - (5/*h*/*60/*m*/*60/*s*/*1000/*ms*/);
+
+  return new Date(UTC_5);
+};
+
 if (Meteor.isServer) {
   Meteor.publish('classrooms', () => {
-    let d = new Date();
-    let dd = d.getDate()-3;
+    const d = generateUTC_5();
+    let dd = d.getDate()-4;
     let mm = d.getMonth() + 1;
     let yy = d.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -15,64 +25,61 @@ if (Meteor.isServer) {
   });
 }
 
+
 Meteor.methods({
   'classrooms.reportOccupied'(classroom) {
     if(!Meteor.user()) return new Meteor.Error('Unauthorized');
-
-    //Checking date in server to avoid arbitraty injection
-
-    const servDate = new Date();
-
-    let hours = servDate.getHours();
-    let minutes = servDate.getMinutes();
+    const time = generateUTC_5();
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
     let start = hours * 100 + minutes;
     let end = Math.min(2359, (hours + 1) * 100 + minutes);
     if (start < 1000) start = '0' + start;
     if (end < 1000) end = '0' + end;
+    start = start+'';
+    end = end+'';
 
-    let dd = servDate.getDate()-3;
-    let mm = servDate.getMonth() + 1;
-    let yy = servDate.getFullYear().toString().substr(-2);
+    let dd = time.getDate()-4;
+    let mm = time.getMonth() + 1;
+    let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
     const date = dd + '-' + mm + '-' + yy;
-    const time = Date.now();
+    const timestamp = Date.now();
 
     Classrooms.update(
       {'date': date, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start, end, report:{
         type: 'occupied',
         user: Meteor.user().username,
-        time
+        timestamp
       }}}}
     );
   },
   'classrooms.upvote'(classroom) {
     if(!Meteor.user()) return new Meteor.Error('Unauthorized');
-
-    const servDate = new Date();
-
-    let hours = servDate.getHours();
-    let minutes = servDate.getMinutes();
+    const time = generateUTC_5();
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
     let start = hours * 100 + minutes;
     let end = Math.min(2359, (hours + 1) * 100 + minutes);
 
-    let dd = servDate.getDate()-3;
-    let mm = servDate.getMonth() + 1;
-    let yy = servDate.getFullYear().toString().substr(-2);
+    let dd = time.getDate()-4;
+    let mm = time.getMonth() + 1;
+    let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
     const date = dd + '-' + mm + '-' + yy;
 
-    const time = Date.now();
+    const timestamp = Date.now();
     Classrooms.update(
       {'date': date, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start, end, report:{
         type: 'upvote',
         user: Meteor.user().username,
-        time
+        timestamp
       }}}}
     );
   },/* Not neede, client already has all the info
@@ -104,11 +111,10 @@ Meteor.methods({
     }
   } */
   'classrooms.reportFree'({ classroom, schedule }) {
-
-    const servDate = new Date();
-    let dd = servDate.getDate()-3;
-    let mm = servDate.getMonth() + 1;
-    let yy = servDate.getFullYear().toString().substr(-2);
+    const time = generateUTC_5();
+    let dd = time.getDate()-4;
+    let mm = time.getMonth() + 1;
+    let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
@@ -130,7 +136,7 @@ Meteor.methods({
             docSchedule.report = {
               type: 'free',
               user: Meteor.user().username,
-              time: postedOn
+              timestamp: postedOn
             };
             //Found, break cycle
             break;
