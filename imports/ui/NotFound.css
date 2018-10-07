@@ -14,14 +14,14 @@
 }
 
 .not-found-title {
-  color: #00ceff;
+  color: #ffc600;
   font-size: 10rem;
   font-weight: bold;
-  text-shadow: 5px 5px #008cff;
+  text-shadow: 5px 5px #272727;
 }
 
 .not-found-subtitle {
-  color: #0058ff;
+  color: #dc9600;
   font-size: 4rem;
   margin-top: -1rem;
 }
