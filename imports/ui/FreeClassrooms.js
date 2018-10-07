@@ -28,6 +28,7 @@ class FreeClassrooms extends Component {
 
         let isFree = true;
         let occupiedReports = [];
+        let freeReport = undefined;
         let minutesLeft = 'Todo el día';
         let upvotes = 0;
         let wasUpvoted = false;
@@ -48,6 +49,9 @@ class FreeClassrooms extends Component {
             }
             else if (schedule.report && schedule.report.type === 'occupied') {
               occupiedReports.push(schedule.report);
+            }
+            else if (schedule.report && schedule.report.type === 'free'){
+              freeReport = schedule.report;
             }
             else {
               isFree = false;
@@ -72,7 +76,8 @@ class FreeClassrooms extends Component {
             minutesLeft,
             upvotes,
             wasUpvoted,
-            occupiedReports
+            occupiedReports,
+            freeReport
           };
 
           freeClassrooms.push(freeclassroom);
@@ -118,7 +123,10 @@ class FreeClassrooms extends Component {
 
     return (
       <div className='classrooms-container'>
-        <h3>Salones disponibles en este momento:</h3>
+        <div className='classrooms-top-text-container'>
+          <h3>Salones disponibles en este momento:</h3>
+          <a href="/reportFree">¿Un salón disponible no está en la lista?</a>
+        </div>
         <ul className='classroom-list'>
           {freeClassrooms.map(free =>
             <FreeClassroom

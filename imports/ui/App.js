@@ -17,7 +17,7 @@ class App extends React.Component {
       <div className='app-container'>
         <nav className='app-topbar'>
           <div className='title-logo-container'>
-            <img src="assets/logo.png" alt="Logo" />
+            <img src="/assets/logo.png" alt="Logo" />
             <div>
               <h1>Sobrecupo</h1>
               <h2>Salones libres en uniandes</h2>
