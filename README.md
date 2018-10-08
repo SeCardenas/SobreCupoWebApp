@@ -27,4 +27,4 @@ Afterwards, the meteor project will be running. The app will be listening to `lo
 [Sergio Cárdenas](https://github.com/SeCardenas)
 
 ## Preview
-
+![thumbnail](thumbnail2.PNG)
