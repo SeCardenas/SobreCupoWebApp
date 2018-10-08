@@ -1,4 +1,4 @@
-/*global AccountsTemplates*/
+/*global AccountsTemplates, Accounts*/
 import React from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { mount } from 'react-mounter';
@@ -10,6 +10,11 @@ import './main.html';
 import AccountsUIWrapper from '../imports/ui/AccountsUIWrapper';
 import NotFound from '../imports/ui/NotFound.js';
 import ReportFree from '../imports/ui/ReportFree.js';
+
+//Restrict e-mails only from uniandes:
+Accounts.config({
+  restrictCreationByEmailDomain: 'uniandes.edu.co'
+});
 
 AccountsTemplates.configure({
   texts: {

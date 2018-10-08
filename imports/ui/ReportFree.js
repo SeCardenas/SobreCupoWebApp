@@ -66,7 +66,6 @@ class ReportFree extends Component {
     }
     else if (this.state.selectedClassroom && this.state.selectedSchedule) {
       const schedule = this.getClassroomSchedules(this.state.selectedClassroom)[this.state.selectedSchedule];
-      console.log(schedule);
       Meteor.call('classrooms.reportFree', { classroom: this.state.selectedClassroom, schedule }, (err) => {
         if (err) this.setState({ errorMessage: err.message, sendingReport: false });
         this.setState({ successMessage: 'Reporte enviado correctamente' });
@@ -82,11 +81,9 @@ class ReportFree extends Component {
   }
 
   render() {
+    
     const clasroomSchedules = this.getClassroomSchedules(this.state.selectedClassroom);
-    if (this.state.selectedSchedule) {
-      console.log('Schedule: ', clasroomSchedules[this.state.selectedSchedule]);
 
-    }
     return (
       <div className='report-free-container'>
         <h3>Reportar un salón disponible: </h3>

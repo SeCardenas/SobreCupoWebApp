@@ -1,4 +1,4 @@
-/*global AccountsTemplates*/
+/*global AccountsTemplates, Accounts*/
 import { Meteor } from 'meteor/meteor';
 
 import '../imports/api/classrooms.js';
@@ -8,6 +8,11 @@ const onSignUp = (id, info) => {
   console.log(id);
   Profiles.insert({name: info.username, history: [], upvotes: 0});
 };
+
+//Restrict e-mails only from uniandes:
+Accounts.config({
+  restrictCreationByEmailDomain: 'uniandes.edu.co'
+});
 
 AccountsTemplates.configure({
   postSignUpHook: onSignUp
