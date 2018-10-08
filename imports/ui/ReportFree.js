@@ -12,7 +12,7 @@ class ReportFree extends Component {
     this.state = {
       selectedClassroom: undefined,
       selectedSchedule: undefined,
-      errorMessage: 'test borrra plx',
+      errorMessage: '',
       successMessage: '',
       sendingReport: false
     };
@@ -72,7 +72,7 @@ class ReportFree extends Component {
         this.setState({ successMessage: 'Reporte enviado correctamente' });
       });
 
-      Meteor.call('profile.reportFree', { classroom: this.state.selectedClassroom, schedule }, (err) => {
+      Meteor.call('profiles.reportFree', { classroom: this.state.selectedClassroom, schedule }, (err) => {
         if (err) this.setState({ errorMessage: err.message, sendingReport: false });
       });
     }
