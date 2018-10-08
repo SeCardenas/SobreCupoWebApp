@@ -16,7 +16,7 @@ const generateUTC_5 = () => {
 if (Meteor.isServer) {
   Meteor.publish('classrooms', () => {
     const d = generateUTC_5();
-    let dd = d.getDate()-4;
+    let dd = d.getDate();
     let mm = d.getMonth() + 1;
     let yy = d.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -39,7 +39,7 @@ Meteor.methods({
     start = start+'';
     end = end+'';
 
-    let dd = time.getDate()-4;
+    let dd = time.getDate();
     let mm = time.getMonth() + 1;
     let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -65,7 +65,7 @@ Meteor.methods({
     let start = hours * 100 + minutes;
     let end = Math.min(2359, (hours + 1) * 100 + minutes);
 
-    let dd = time.getDate()-4;
+    let dd = time.getDate();
     let mm = time.getMonth() + 1;
     let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -112,7 +112,7 @@ Meteor.methods({
   } */
   'classrooms.reportFree'({ classroom, schedule }) {
     const time = generateUTC_5();
-    let dd = time.getDate()-4;
+    let dd = time.getDate();
     let mm = time.getMonth() + 1;
     let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;

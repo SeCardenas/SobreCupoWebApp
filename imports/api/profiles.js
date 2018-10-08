@@ -36,7 +36,7 @@ Meteor.methods({
     start = start+'';
     end = end+'';
 
-    let dd = time.getDate() - 4;
+    let dd = time.getDate();
     let mm = time.getMonth() + 1;
     let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
@@ -67,7 +67,7 @@ Meteor.methods({
     const timestamp = Date.now();
     const time = generateUTC_5();
 
-    let dd = time.getDate() - 4;
+    let dd = time.getDate();
     let mm = time.getMonth() + 1;
     let yy = time.getFullYear().toString().substr(-2);
     if (dd < 10) dd = '0' + dd;
