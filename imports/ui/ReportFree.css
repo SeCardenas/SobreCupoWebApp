@@ -1,0 +1,7 @@
+.report-free-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  margin: 16px;
+}

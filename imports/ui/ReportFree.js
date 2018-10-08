@@ -88,7 +88,7 @@ class ReportFree extends Component {
 
     }
     return (
-      <div>
+      <div className='report-free-container'>
         <h3>Reportar un salón disponible: </h3>
         {!this.props.user ?
           <p>
