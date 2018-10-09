@@ -4,7 +4,7 @@ This apllication allows students to find empty classrooms at the university. It 
 
 It's main purpose is to help students to find empty classrooms so they can use them as a place for studying.
 
-The application is made with Meteor and React components, and uses MongoDB. The final app has been deployed to heroku: http://duozi.herokuapp.com/ for public usage.
+The application is made with Meteor and React components, and uses MongoDB. The final app has been deployed to heroku: http://sobrecupo.herokuapp.com/ for public usage.
 
 ## How to run it
 To run this project, you need to have meteor installed:
