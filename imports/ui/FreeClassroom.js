@@ -87,29 +87,31 @@ class FreeClassroom extends Component {
   }
 
   render() {
+    const {classroom, user} = this.props;
+    const {confirmedReport, confirmedUpvote, reporting, confirming, errorMessage, successMessage} = this.state
     return (
       <li className='free-classroom-container'>
         <strong>
-          {this.formatClassroomName(this.props.classroom.name)}
+          {this.formatClassroomName(classroom.name)}
         </strong>
         <p>
-          {this.props.classroom.minutesLeft}
+          {classroom.minutesLeft}
         </p>
 
-        {this.props.classroom.freeReport ?
+        {classroom.freeReport &&
           <p className='success-message'>Este salón fue reportado libre por: 
-            <a href={`/profiles/${this.props.classroom.freeReport.user}`}>
-              {this.props.classroom.freeReport.user}
+            <a href={`/profiles/${classroom.freeReport.user}`}>
+              {classroom.freeReport.user}
             </a>
-          </p> : null}
+          </p>}
 
-        {this.props.classroom.occupiedReports.length > 0 ?
-          this.generateUserReportList(this.props.classroom.occupiedReports) : null}
+        {classroom.occupiedReports.length &&
+          this.generateUserReportList(classroom.occupiedReports)}
 
         <div className='icons-container'>
           <div className='icon'>
-            <i className={this.state.confirmedReport || this.hasUserSentReport() ? 'material-icons disabled' : 'material-icons'}
-              onClick={() => this.state.confirmedReport || this.hasUserSentReport() ? null : this.setState({ reporting: !this.state.reporting })}>
+            <i className={confirmedReport || this.hasUserSentReport() ? 'material-icons disabled' : 'material-icons'}
+              onClick={() => confirmedReport || this.hasUserSentReport() ? null : this.setState({ reporting: !reporting })}>
               error_outline
             </i>
             <small>Reportar</small>
@@ -118,19 +120,19 @@ class FreeClassroom extends Component {
             </span>
           </div>
           <div className='icon'>
-            <i className={this.state.confirmedUpvote ? 'material-icons disabled' : 'material-icons'}
-              onClick={() => this.state.confirmedUpvote ? null : this.confirmClassroom()}>
+            <i className={confirmedUpvote ? 'material-icons disabled' : 'material-icons'}
+              onClick={() => confirmedUpvote ? null : this.confirmClassroom()}>
               check_circle_outline
             </i>
-            <small className={this.state.confirmedUpvote ? 'disabled' : null}>Confirmar</small>
+            <small className={confirmedUpvote ? 'disabled' : null}>Confirmar</small>
             <span>
               ¡Este salón está disponible!
             </span>
           </div>
         </div>
-        {this.state.reporting ?
+        {reporting ?
           <div>
-            {this.props.user ?
+            {user ?
               <div>
                 <h4>Reportar salón ocupado</h4>
                 <p>¿Por qué el salón está ocupado?</p>
@@ -143,24 +145,20 @@ class FreeClassroom extends Component {
             }
           </div> : null}
 
-        {this.state.confirming ?
+        {confirming &&
           <div>
-            {this.props.user ?
+            {user ?
               null :
               <div>
                 <p>Únicamente los usuarios pueden confirmar salones. <a href="/access">Inicia sesión</a></p>
               </div>
             }
-          </div> : null}
+          </div>}
 
-        {this.state.errorMessage ?
-          <p className='error-message'>{this.state.errorMessage}</p>
-          : null}
-        {this.state.successMessage ?
-          <p className='success-message'>{this.state.successMessage}</p>
-          : null}
+        {errorMessage && <p className='error-message'>{errorMessage}</p>}
+        {successMessage && <p className='success-message'>{successMessage}</p>}
         <small className='classroom-score'>
-          +{this.props.classroom.upvotes}
+          +{classroom.upvotes}
         </small>
       </li>
     );
