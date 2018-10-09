@@ -47,7 +47,7 @@ Meteor.methods({
 
     const date = dd + '-' + mm + '-' + yy;
     const timestamp = Date.now();
-
+//Zulma: al usar la app he notado un problema de usabilidad y es que no hay manera de anular mis pasos, por ejemplo si hago un reporte, el salon solo puede pasar al estado ocupado, tampoco hay boton para cancelar el reporte. Que hago si me equivoque y hice mal un clic? denle a sus usuarios una alternativa cuando se equivocan :)
     Classrooms.update(
       {'date': date, 'classrooms.name': classroom}, 
       {$push: {'classrooms.$.schedules': {start, end, report:{
