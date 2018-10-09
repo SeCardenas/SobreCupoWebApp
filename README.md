@@ -6,6 +6,11 @@ It's main purpose is to help students to find empty classrooms so they can use t
 
 The application is made with Meteor and React components, and uses MongoDB. The final app has been deployed to heroku: http://sobrecupo.herokuapp.com/ for public usage.
 
+## Technologies used
+ - MongoDB
+ - Meteor
+ - React.js
+
 ## How to run it
 To run this project, you need to have meteor installed:
 
@@ -25,6 +30,9 @@ Afterwards, the meteor project will be running. The app will be listening to `lo
 [Julián Manrique](https://github.com/Sxubas)
 
 [Sergio Cárdenas](https://github.com/SeCardenas)
+
+## License
+This project is licensed under the MIT License, see [LICENSE](LICENSE).
 
 ## Preview
 ![thumbnail](thumbnail2.PNG)
