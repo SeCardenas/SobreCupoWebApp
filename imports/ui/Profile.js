@@ -5,7 +5,8 @@ import { Meteor } from 'meteor/meteor';
 import { Profiles } from '../api/profiles.js';
 import HistoryItem from './HistoryItem.js';
 import './Profile.css';
-
+//Zulma: mientras navegaba por la app no encontre una forma de acceder a este perfil (que no fuera creando un reporte y luego viendolo) La informacion que esta aqui es valiosa! deberia ser mas accesible para los usuarios.  
+//Tambien seria chevere si pudiera aprobar o rechazar los reportes de otros usuarios 
 class Profile extends Component {
   constructor(props) {
     super(props);
