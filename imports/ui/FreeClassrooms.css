@@ -1,3 +1,4 @@
+//Zulma: creo que podrian beneficiarse de utilizar el grid de bootstrap para manejar la manera en que cargan los salones, no esta mal la manera en que lo manejaron, pero estoy segura de que bootstrap es una solucion mas robusta y podria ayudarles a mostrar mejor las cosas, por ejemplo cuando cambia el contenido de un salon(cuando tiene un reporte) se ve demasiado grande en comparacion con los demas. (Para resaltar salones con reportes podrian utilziar un cambio de color)
 .classrooms-container{
   display: flex;
   flex-direction: column;
