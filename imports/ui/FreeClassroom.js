@@ -105,7 +105,7 @@ class FreeClassroom extends Component {
             </a>
           </p>}
 
-        {classroom.occupiedReports.length &&
+        {!!classroom.occupiedReports.length &&
           this.generateUserReportList(classroom.occupiedReports)}
 
         <div className='icons-container'>
