@@ -50,7 +50,7 @@ class FreeClassrooms extends Component {
             else if (schedule.report && schedule.report.type === 'occupied') {
               occupiedReports.push(schedule.report);
             }
-            else if (schedule.report && schedule.report.type === 'free'){
+            else if (schedule.report && schedule.report.type === 'free') {
               freeReport = schedule.report;
             }
             else {
@@ -85,6 +85,17 @@ class FreeClassrooms extends Component {
       }
     }
 
+    freeClassrooms.sort(
+      (a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      }
+    )
     return freeClassrooms;
 
   }
