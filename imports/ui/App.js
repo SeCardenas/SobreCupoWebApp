@@ -20,7 +20,7 @@ class App extends React.Component {
             <a href='/'><img src="/assets/logo.png" alt="Logo"/></a>
             <div>
               <h1>Sobrecupo</h1>
-              <h2>Salones libres en uniandes</h2>
+              <h2>Salones libres en Uniandes</h2>
             </div>
           </div>
           {this.props.user ?
