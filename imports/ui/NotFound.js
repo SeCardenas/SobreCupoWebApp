@@ -8,8 +8,9 @@ const NotFound = () => (
             <h1 className="not-found-title">404</h1>
             <h2 className="not-found-subtitle">Page not found!</h2>
             <span className="not-found-msg">
-                The page you are trying to access does not exist.
+                La página que buscas no existe.
             </span>
+            <h3><a href="http://sobrecupo.herokuapp.com/">Volver al inicio</a></h3>
         </div>
     </div>
 );
